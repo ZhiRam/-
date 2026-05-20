@@ -1,0 +1,54 @@
+<view class="container">
+  <!-- 顶部欢迎 -->
+  <view class="header">
+    <view class="welcome-text">欢迎回来</view>
+    <view class="subtitle">开始今天的健身计划</view>
+  </view>
+
+  <!-- 功能入口卡片 -->
+  <view class="feature-cards">
+    <!-- 饮食安排 -->
+    <view class="feature-card" bindtap="goToDiet">
+      <view class="card-icon">🍽️</view>
+      <view class="card-content">
+        <view class="card-title">饮食安排</view>
+        <view class="card-desc">碳循环、生酮等健身饮食</view>
+      </view>
+      <view class="card-arrow">›</view>
+    </view>
+
+    <!-- 健身动作 -->
+    <view class="feature-card workout-card" bindtap="goToWorkout">
+      <view class="card-icon">💪</view>
+      <view class="card-content">
+        <view class="card-title">健身动作</view>
+        <view class="card-desc">肩部、腿部、胸部等部位训练</view>
+      </view>
+      <view class="card-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 快速数据展示 -->
+  <view class="quick-stats">
+    <view class="stat-item">
+      <view class="stat-value">5</view>
+      <view class="stat-label">饮食方案</view>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <view class="stat-value">32</view>
+      <view class="stat-label">训练动作</view>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <view class="stat-value">6</view>
+      <view class="stat-label">肌群分类</view>
+    </view>
+  </view>
+
+  <!-- 底部提示 -->
+  <view class="tips-section">
+    <view class="tips-title">💡 今日提示</view>
+    <view class="tips-content">合理的饮食搭配科学的训练，才能达到最佳的健身效果</view>
+  </view>
+</view>

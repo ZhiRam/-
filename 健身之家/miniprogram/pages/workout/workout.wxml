@@ -1,0 +1,37 @@
+<view class="container">
+  <!-- 顶部导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-title">健身动作</view>
+    <view class="nav-back" bindtap="goBack">
+      <text class="back-text">返回</text>
+      <text class="back-icon">›</text>
+    </view>
+  </view>
+
+  <!-- 可滚动内容区域 -->
+  <scroll-view scroll-y class="content-scroll">
+    <!-- 顶部标题 -->
+    <view class="header">
+      <view class="header-title">选择训练部位</view>
+      <view class="header-subtitle">科学训练，高效增肌</view>
+    </view>
+
+    <!-- 五大肌群 -->
+    <view class="muscle-grid">
+      <view 
+        wx:for="{{muscleGroups}}"
+        wx:key="id"
+        class="muscle-card {{item.id}}"
+        data-id="{{item.id}}"
+        bindtap="selectMuscle">
+        <view class="card-bg" style="background: {{item.color}}"></view>
+        <view class="card-content">
+          <view class="card-icon">{{item.icon}}</view>
+          <view class="card-name">{{item.name}}</view>
+          <view class="card-count">{{item.exerciseCount}}个动作</view>
+          <view class="card-arrow">›</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

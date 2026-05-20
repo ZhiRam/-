@@ -1,0 +1,221 @@
+<view class="container">
+  <!-- 顶部导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="goBack">
+      <text class="back-icon">‹</text>
+      <text class="back-text">返回</text>
+    </view>
+    <view class="nav-title">饮食安排</view>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- 可滚动内容区域 -->
+  <scroll-view scroll-y class="content-scroll">
+    <!-- 顶部标题 -->
+    <view class="header">
+      <view class="header-title">健康饮食</view>
+      <view class="header-subtitle">科学搭配，高效健身</view>
+    </view>
+
+    <!-- Tab切换 -->
+    <view class="tab-bar">
+      <view 
+        class="tab-item {{currentTab === 'methods' ? 'active' : ''}}" 
+        data-tab="methods"
+        bindtap="switchTab">
+        饮食方法
+      </view>
+      <view 
+        class="tab-item {{currentTab === 'plans' ? 'active' : ''}}" 
+        data-tab="plans"
+        bindtap="switchTab">
+        推荐方案
+      </view>
+    </view>
+
+    <!-- 饮食方法列表 -->
+    <view class="content" wx:if="{{currentTab === 'methods'}}">
+      <view class="section-title">热门饮食方法</view>
+      <view class="methods-list">
+        <view 
+          wx:for="{{dietMethods}}" 
+          wx:key="id"
+          class="method-card {{selectedMethod === item.id ? 'selected' : ''}}"
+          data-method="{{item.id}}"
+          bindtap="selectMethod">
+          <view class="method-icon">{{getIcon(item.icon)}}</view>
+          <view class="method-info">
+            <view class="method-name">{{item.name}}</view>
+            <view class="method-desc">{{item.desc}}</view>
+          </view>
+          <view class="method-arrow {{selectedMethod === item.id ? 'rotated' : ''}}">›</view>
+        </view>
+      </view>
+
+      <!-- 方法详细介绍 -->
+      <view class="method-detail" wx:if="{{selectedMethod}}">
+        <view wx:for="{{dietMethods}}" wx:key="id">
+          <block wx:if="{{item.id === selectedMethod}}">
+            <view class="detail-title">{{item.name}}详解</view>
+            <view class="detail-content">
+              <view wx:if="{{item.id === 'carbonCycle'}}">
+                <view class="detail-section">原理</view>
+                <view class="detail-text">碳循环饮食通过在训练日提高碳水摄入，在休息日降低碳水摄入，来同时实现增肌和减脂的目标。</view>
+                
+                <view class="detail-section">推荐分配</view>
+                <view class="detail-text">• 高碳日：训练日，碳水占总热量50-60%</view>
+                <view class="detail-text">• 低碳日：休息日，碳水占总热量20-30%</view>
+                
+                <view class="detail-section">适合人群</view>
+                <view class="detail-text">有训练基础人群，需要维持肌肉同时减脂</view>
+              </view>
+
+              <view wx:elif="{{item.id === 'keto'}}">
+                <view class="detail-section">原理</view>
+                <view class="detail-text">生酮饮食通过极低碳水摄入（通常低于50g/天），让身体进入酮症状态，利用脂肪作为主要能量来源。</view>
+                
+                <view class="detail-section">推荐分配</view>
+                <view class="detail-text">• 碳水：小于50g/天（小于10%）</view>
+                <view class="detail-text">• 蛋白质：25-30%</view>
+                <view class="detail-text">• 脂肪：60-70%</view>
+                
+                <view class="detail-section">适合人群</view>
+                <view class="detail-text">需要快速减脂、有一定饮食控制经验者</view>
+              </view>
+
+              <view wx:elif="{{item.id === 'highProtein'}}">
+                <view class="detail-section">原理</view>
+                <view class="detail-text">高蛋白饮食以蛋白质为主要营养素，每公斤体重摄入2-2.5g蛋白质，支持肌肉修复和增长。</view>
+                
+                <view class="detail-section">推荐分配</view>
+                <view class="detail-text">• 蛋白质：2-2.5g/kg体重</view>
+                <view class="detail-text">• 碳水：4-6g/kg体重</view>
+                <view class="detail-text">• 脂肪：适量</view>
+                
+                <view class="detail-section">适合人群</view>
+                <view class="detail-text">增肌期人群、力量训练者</view>
+              </view>
+
+              <view wx:elif="{{item.id === 'intermittent'}}">
+                <view class="detail-section">原理</view>
+                <view class="detail-text">间歇性断食通过延长禁食时间（16小时），让身体在进食窗口期更高效地利用营养。</view>
+                
+                <view class="detail-section">推荐分配</view>
+                <view class="detail-text">• 进食窗口：12:00-20:00（8小时）</view>
+                <view class="detail-text">• 禁食时间：20:00-12:00（16小时）</view>
+                
+                <view class="detail-section">适合人群</view>
+                <view class="detail-text">想要简化饮食计划、容易控制热量摄入者</view>
+              </view>
+
+              <view wx:else>
+                <view class="detail-section">原理</view>
+                <view class="detail-text">低脂饮食将脂肪摄入控制在总热量的15-20%，以碳水化合物为主要能量来源。</view>
+                
+                <view class="detail-section">推荐分配</view>
+                <view class="detail-text">• 脂肪：15-20%</view>
+                <view class="detail-text">• 蛋白质：25-30%</view>
+                <view class="detail-text">• 碳水：50-60%</view>
+                
+                <view class="detail-section">适合人群</view>
+                <view class="detail-text">喜欢高碳水饮食、进行有氧运动为主者</view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+
+    <!-- 推荐方案列表 -->
+    <view class="content" wx:if="{{currentTab === 'plans'}}">
+      <view class="section-title">精选饮食方案</view>
+      <view class="plans-list">
+        <view 
+          wx:for="{{dietPlans}}" 
+          wx:key="id"
+          class="plan-card"
+          data-id="{{item.id}}"
+          bindtap="selectPlan">
+          <view class="plan-header">
+            <view class="plan-name">{{item.name}}</view>
+            <view class="plan-calories">{{item.calories}} kcal</view>
+          </view>
+          <view class="plan-desc">{{item.description}}</view>
+          <view class="plan-macros">
+            <view class="macro-item">
+              <view class="macro-value">{{item.macros.protein}}g</view>
+              <view class="macro-label">蛋白质</view>
+            </view>
+            <view class="macro-item">
+              <view class="macro-value">{{item.macros.carbs}}g</view>
+              <view class="macro-label">碳水</view>
+            </view>
+            <view class="macro-item">
+              <view class="macro-value">{{item.macros.fat}}g</view>
+              <view class="macro-label">脂肪</view>
+            </view>
+          </view>
+          <view class="plan-arrow">›</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 饮食方案详情弹窗 -->
+<view class="detail-modal {{isShowDetail ? 'show' : ''}}" wx:if="{{selectedPlan}}">
+  <view class="modal-mask" bindtap="closeDetail"></view>
+  <view class="modal-content">
+    <view class="modal-header">
+      <view class="modal-title">{{selectedPlan.name}}</view>
+      <view class="modal-close" bindtap="closeDetail">✕</view>
+    </view>
+    
+    <scroll-view scroll-y class="modal-body">
+      <!-- 热量和宏量营养素 -->
+      <view class="detail-section-block">
+        <view class="calories-row">
+          <view class="calories-value">{{selectedPlan.calories}}</view>
+          <view class="calories-unit">kcal/天</view>
+        </view>
+        <view class="macros-chart">
+          <view wx:for="{{macrosList}}" wx:key="name" class="macro-bar">
+            <view class="macro-bar-bg">
+              <view class="macro-bar-fill macro-{{index}}" style="width: {{item.percent}}%"></view>
+            </view>
+            <view class="macro-bar-info">
+              <text class="macro-name">{{item.name}}</text>
+              <text class="macro-num">{{item.value}}{{item.unit}} ({{item.percent}}%)</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 每日餐单 -->
+      <view class="detail-section-block">
+        <view class="section-header">每日餐单</view>
+        <view class="meals-list">
+          <view wx:for="{{selectedPlan.meals}}" wx:key="name" class="meal-item">
+            <view class="meal-time">{{item.time}}</view>
+            <view class="meal-info">
+              <view class="meal-name">{{item.name}}</view>
+              <view class="meal-foods">
+                <text wx:for="{{item.foods}}" wx:key="*this" class="food-tag">{{item}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 使用说明 -->
+      <view class="detail-section-block">
+        <view class="section-header">使用说明</view>
+        <view class="tips-list">
+          <text class="tip-item">• 根据自身目标调整热量</text>
+          <text class="tip-item">• 配合适量运动效果更佳</text>
+          <text class="tip-item">• 如有特殊情况请咨询营养师</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

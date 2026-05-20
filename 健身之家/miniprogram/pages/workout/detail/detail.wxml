@@ -1,0 +1,147 @@
+<view class="container">
+  <!-- WXS模块用于处理显示逻辑 -->
+  <wxs module="utils">
+    module.exports = {
+      getDifficultyColor: function(difficulty) {
+        switch (difficulty) {
+          case '初级': return '#4CAF50';
+          case '中级': return '#FF9800';
+          case '高级': return '#F44336';
+          default: return '#999';
+        }
+      },
+      getDifficultyIcon: function(difficulty) {
+        switch (difficulty) {
+          case '初级': return '⭐';
+          case '中级': return '⭐⭐';
+          case '高级': return '⭐⭐⭐';
+          default: return '';
+        }
+      }
+    };
+  </wxs>
+
+  <!-- 顶部导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-title">{{muscleInfo.name}}训练</view>
+    <view class="nav-back" bindtap="goBack">
+      <text class="back-text">返回</text>
+      <text class="back-icon">›</text>
+    </view>
+  </view>
+
+  <!-- 可滚动内容区域 -->
+  <scroll-view scroll-y class="content-scroll">
+    <!-- 头部 -->
+    <view class="header" style="background: {{muscleInfo.color}}">
+      <view class="header-icon">{{muscleInfo.icon}}</view>
+      <view class="header-title">{{muscleInfo.name}}</view>
+      <view class="header-count">{{muscleInfo.exercises.length}}个动作</view>
+    </view>
+
+    <!-- 动作列表 -->
+    <view class="exercises-section">
+      <view class="section-title">动作列表</view>
+      <view class="exercises-list">
+        <view 
+          wx:for="{{muscleInfo.exercises}}" 
+          wx:key="id"
+          class="exercise-card"
+          data-id="{{item.id}}"
+          bindtap="selectExercise">
+          <view class="exercise-left">
+            <view class="exercise-name">{{item.name}}</view>
+            <view class="exercise-info">
+              <view class="info-tag">
+                <text class="tag-icon">🏋️</text>
+                {{item.equipment}}
+              </view>
+            </view>
+          </view>
+          <view class="exercise-right">
+            <view class="difficulty-badge" style="background: {{utils.getDifficultyColor(item.difficulty)}}">
+              {{item.difficulty}}
+            </view>
+            <view class="arrow">›</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 动作详情弹窗 -->
+<view class="detail-modal {{isShowDetail ? 'show' : ''}}" wx:if="{{isShowDetail && selectedExercise}}">
+  <view class="modal-mask" bindtap="closeDetail"></view>
+  <view class="modal-content">
+    <view class="modal-header">
+      <view class="modal-title">{{selectedExercise.name}}</view>
+      <view class="modal-close" bindtap="closeDetail">✕</view>
+    </view>
+    
+    <scroll-view scroll-y class="modal-body">
+      <!-- 基本信息 -->
+      <view class="info-cards">
+        <view class="info-card">
+          <view class="card-icon">🏋️</view>
+          <view class="card-label">器械</view>
+          <view class="card-value">{{selectedExercise.equipment}}</view>
+        </view>
+        <view class="info-card">
+          <view class="card-icon">⚡</view>
+          <view class="card-label">难度</view>
+          <view class="card-value" style="color: {{utils.getDifficultyColor(selectedExercise.difficulty)}}">
+            {{selectedExercise.difficulty}} {{utils.getDifficultyIcon(selectedExercise.difficulty)}}
+          </view>
+        </view>
+        <view class="info-card">
+          <view class="card-icon">{{muscleInfo.icon}}</view>
+          <view class="card-label">部位</view>
+          <view class="card-value">{{muscleInfo.name}}</view>
+        </view>
+      </view>
+
+      <!-- 动作描述 -->
+      <view class="detail-block">
+        <view class="block-title">动作简介</view>
+        <view class="block-text">{{selectedExercise.description}}</view>
+      </view>
+
+      <!-- 动作步骤 -->
+      <view class="detail-block">
+        <view class="block-title">动作详解</view>
+        <view class="steps-list">
+          <view wx:for="{{selectedExercise.steps}}" wx:key="index" class="step-item">
+            <view class="step-number">{{index + 1}}</view>
+            <view class="step-text">{{item}}</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 训练提示 -->
+      <view class="detail-block tips-block">
+        <view class="block-title">训练提示</view>
+        <view class="tips-content">{{selectedExercise.tips}}</view>
+      </view>
+
+      <!-- 推荐组数 -->
+      <view class="recommendation-block">
+        <view class="rec-title">推荐训练量</view>
+        <view class="rec-grid">
+          <view class="rec-item">
+            <view class="rec-value">3-4</view>
+            <view class="rec-label">组数</view>
+          </view>
+          <view class="rec-item">
+            <view class="rec-value">8-12</view>
+            <view class="rec-label">次数</view>
+          </view>
+          <view class="rec-item">
+            <view class="rec-value">60-90</view>
+            <view class="rec-label">休息(秒)</view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

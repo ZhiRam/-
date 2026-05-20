@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/diet/diet",
+    "pages/workout/workout",
+    "pages/workout/detail/detail"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#1a1a2e"
+  },
+  "page-meta": {
+    "navigation-bar": {
+      "background": "#1a1a2e",
+      "front-color": "#ffffff"
+    }
+  },
+  "style": "v2",
+  "renderer": "skyline",
+  "rendererOptions": {
+    "skyline": {
+      "defaultDisplayBlock": true,
+      "defaultContentBox": true,
+      "tagNameStyleIsolation": "legacy",
+      "disableABTest": true,
+      "sdkVersionBegin": "3.0.0",
+      "sdkVersionEnd": "15.255.255"
+    }
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
